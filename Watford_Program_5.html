@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+	<html>
+		<head>
+		  <title>Tracking Summerville Seaworld Tickets</title>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+				<!-- FileName:Watford_Program_5.html -->
+				<!-- Programer: Katelyn Watford -->
+				<!-- Purpose: Tracking Summerville Seaworld Ticket count category count and outputing all its totals with functionss -->
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+  <script type="text/javascript">
+		  	//Global Vars:
+	var PRE_FORMAT = " <pre>";
+	var END_FORMAT = " </pre>";
+	var ADULT_FEE = 11.50;
+	var JUNIOR_FEE = 7.50;
+	var TODDLER_FEE = 0;
+	var ADULTS = "A";
+	var JUNIORS = "J";
+	var TODDLER = "T";
+
+function main()
+{
+	var MAX_SEAT_COUNT = 20; //just a random number of seats in the arena
+	var MAX_TICKETS = 10;
+	var totalTickets = 0;
+	var ticketType;
+	var numTickets = 0;
+	var ticketPrice = 0;
+	var adultCount = 0;
+	var juniorCount = 0;
+	var toddlerCount = 0;
+	var extraSeats = 0;
+	var totalSales = 0;
+	var adultPrice = 0;
+	var juniorPrice = 0;
+	var toddlerPrice = 0;
+	var currentOrder = 0;
+
+	//Table for customer to choose from:
+	document.write(PRE_FORMAT);
+	document.writeln("Categories\tPrice");
+	document.writeln("Adult", "\t\t $", ADULT_FEE.toFixed(2));
+	document.writeln("Junior", "\t\t $", JUNIOR_FEE.toFixed(2));
+	document.writeln("Toddler", "\t\t $", TODDLER_FEE);
+	document.write(END_FORMAT);
+
+	//alert to look at table
+	alert("Please look at the table and then enter only one category at a time");
+
+
+	while(totalTickets < MAX_SEAT_COUNT)
+	{
+		ticketType = getTicketType();
+
+		while(ticketType != ADULTS && ticketType != JUNIORS && ticketType != TODDLER)
+		{
+			ticketType = prompt("Please enter A, J or T");
+			ticketType = ticketType.toUpperCase();
+		}
+
+		numTickets = prompt("How many tickets would you like?");
+		numTickets = parseInt(numTickets);
+
+		ticketPrice = findTicketPrice(ticketType);
+
+		if (numTickets > MAX_TICKETS)
+		{
+			numTickets = MAX_TICKETS;
+			alert("Only " + MAX_TICKETS + " tickets can be sold!");
+		}
+
+		if (ticketType == ADULTS)
+		{
+			ticketPrice = ADULT_FEE;
+			adultCount += numTickets;
+		}
+		else  if (ticketType == JUNIORS)
+		{
+			ticketPrice = JUNIOR_FEE;
+			juniorCount +=numTickets;
+		}
+		else  if (ticketType == TODDLER)
+		{
+			ticketPrice = TODDLER_FEE;
+			toddlerCount += numTickets;
+		}
+
+		currentOrder = ticketPrice * numTickets;
+		totalSales  += currentOrder;
+		totalTickets += numTickets;
+
+	//displayPurchase:
+	displayPurchase(ticketType, currentOrder, numTickets);
+
+	}//end loop
+
+	//Math for the while if else:
+	extraSeats = totalTickets - MAX_SEAT_COUNT;
+
+	//clearing the screen:
+	 clearscreen();
+
+	//DIsplayFinalReport:
+	displayFinalReport(MAX_SEAT_COUNT, extraSeats, totalTickets, adultCount, juniorCount, toddlerCount, totalSales);
+
+	return;
+} //end main
+
+function getTicketType(ADULTS, JUNIORS, TODDLER)
+{
+	var ticketType;
+
+	ticketType = prompt("Enter A, J or T");
+	ticketType = ticketType.toUpperCase();
+
+	return ticketType;
+}//end getTicketType
+
+function findTicketPrice(ticketType)
+{
+
+	var admissionFee;
+
+	if(ticketType == ADULTS)
+	{
+		admissionFee = ADULT_FEE;
+	}
+	else if(ticketType == JUNIORS)
+	{
+		admissionFee = JUNIOR_FEE;
+	}
+	else
+	{
+		admissionFee = TODDLER_FEE;
+	}
+
+	return admissionFee;
+}//end getTicketPrice
+
+function displayPurchase(ticketType, currentOrder, numTickets)
+{
+	document.write("<br>" + ticketType + " " + numTickets + " " + "$"  + "" + currentOrder.toFixed(2));
+}//end displayPurchase
+
+//ClearScreen Function:
+ function clearscreen()
+ {
+ 	document.body.innerHTML = "";
+	return;
+ }
+
+function displayFinalReport(MAX_SEAT_COUNT, extraSeats, totalTickets, adultCount, juniorCount, toddlerCount, totalSales)
+{
+	var today = new Date();
+	var day = today.getDate();
+	var month = (today.getMonth() + 1);
+	var year = today.getFullYear();
+
+	document.write(PRE_FORMAT);
+	document.write("<center>");
+	document.write("<br><h2>TICKET SALES REPORT:" + " " + month + "/" + day + "/" + year + "</h2>");
+
+	document.write("<br>");
+
+	document.writeln("<br><b>Seat capcity:" + "</b>" + " " + MAX_SEAT_COUNT + "\t\t" + "<b>" + "Extra seats:" + "</b>"+ " " + extraSeats + "\t\t" + "<b>" + "Total Sold:" + "</b>" + " " + totalTickets);
+	//document.write("<br>Extra seats:" + extraSeats);
+	//document.write("<br>Total Sold:" + totalTickets);
+
+	document.write("<br>");
+
+	document.writeln("<br><b>Adults:" + "</b>" + " " + adultCount + "\t\t <b>Juniors:" + "</b>" + " " + juniorCount + "\t\t <b>Toddlers:" + "</b>" + " " + toddlerCount);
+	//document.write("<br>Juniors:" + juniorCount);
+	//document.write("<br>Toddlers:" + toddlerCount);
+
+	document.write("<br>");
+
+	document.write("<br><b>Total Gross Sales For Today: $" + totalSales.toFixed(2) + "</b>");
+	document.write("</center>");
+	document.write(END_FORMAT);
+
+	return;
+}//end displayFinalReport
+
+		</script>
+	</head>
+
+		<body>
+			<script>
+				main();
+			</script>
+		</body>
+</html>
